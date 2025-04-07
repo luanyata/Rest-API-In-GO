@@ -1,0 +1,46 @@
+# Go build
+/bin/
+/build/
+/dist/
+*.exe
+*.out
+*.test
+
+# Módulos & dependências
+/vendor/
+/go.sum
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+
+# Testes
+*.coverprofile
+*.testresult
+*.prof
+
+# Cache do Go
+*.modcache
+*.cache
+
+# Arquivos do GoLand
+*.iml
+*.ipr
+*.iws
+
+# Ambiente
+.env
+.env.*
+
+# Hot reload
+*.tmp
