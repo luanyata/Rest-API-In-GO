@@ -5,6 +5,7 @@ A simple RESTful API built with Go, featuring user management endpoints and erro
 ## Features
 
 - CRUD operations for user management
+- CRUD operations for company management
 - Custom error handling
 - JSON response formatting
 - Request middleware
@@ -49,6 +50,16 @@ The server will start at `http://localhost:4545`
 | PUT    | /users/{id} | Update a user       |
 | DELETE | /users/{id} | Delete a user       |
 
+### Companies
+
+| Method | Endpoint        | Description            |
+| ------ | --------------- | ---------------------- |
+| POST   | /companies      | Create a new company   |
+| GET    | /companies      | List all companies     |
+| GET    | /companies/{id} | Get a specific company |
+| PUT    | /companies/{id} | Update a company       |
+| DELETE | /companies/{id} | Delete a company       |
+
 ### Health Check
 - `GET /ping` - Returns "pong!!!" to verify the server is running
 
@@ -62,6 +73,17 @@ Content-Type: application/json
 {
     "name": "John Doe",
     "email": "john@example.com"
+}
+```
+
+### Create Company
+```http
+POST /companies
+Content-Type: application/json
+
+{
+    "name": "Acme Inc",
+    "cnpj": "12345678000199"
 }
 ```
 
@@ -81,6 +103,7 @@ Content-Type: application/json
 ```
 .
 ├── internal/
+│   ├── company/       # Company handlers
 │   ├── errs/          # Error handling
 │   ├── httpx/         # HTTP utilities
 │   ├── middleware/    # HTTP middleware
