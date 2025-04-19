@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"rest-go/internal/company"
 	"rest-go/internal/middleware"
 	"rest-go/internal/user"
 
@@ -19,6 +20,7 @@ func main() {
 	})
 
 	user.SetupRoutes(r)
+	company.SetupRoutes(r)
 
 	fmt.Println("Starting server on :4545")
 	if err := http.ListenAndServe(":4545", r); err != nil {
