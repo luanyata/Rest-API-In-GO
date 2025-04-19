@@ -103,12 +103,15 @@ Content-Type: application/json
 ```
 .
 ├── internal/
-│   ├── company/       # Company handlers
-│   ├── errs/          # Error handling
-│   ├── httpx/         # HTTP utilities
-│   ├── middleware/    # HTTP middleware
-│   └── user/          # User handlers
-├── main.go            # Application entry point
+│   ├── core/
+│   │   ├── company/     # Company handlers
+│   │   └── user/        # User handlers
+│   ├── infra/
+│   │   ├── httpx/       # HTTP utilities
+│   │   └── middleware/  # HTTP middleware
+│   └── shared/
+│       └── errs/        # Error handling
+├── main.go              # Application entry point
 ├── go.mod            
 └── go.sum
 ```

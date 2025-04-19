@@ -3,8 +3,9 @@ package company
 import (
 	"encoding/json"
 	"net/http"
-	"rest-go/internal/errs"
-	"rest-go/internal/httpx"
+	"rest-go/internal/infra/httpx"
+	"rest-go/internal/shared/errs"
+
 	"strconv"
 
 	"github.com/go-chi/chi/v5"

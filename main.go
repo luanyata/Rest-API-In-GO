@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"rest-go/internal/company"
-	"rest-go/internal/middleware"
-	"rest-go/internal/user"
+	"rest-go/internal/core/company"
+	"rest-go/internal/core/user"
+	"rest-go/internal/infra/middleware"
 
 	"github.com/go-chi/chi/v5"
 )

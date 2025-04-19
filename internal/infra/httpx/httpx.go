@@ -3,7 +3,7 @@ package httpx
 
 import (
 	"net/http"
-	"rest-go/internal/errs"
+	"rest-go/internal/shared/errs"
 )
 
 type HandlerFunc func(w http.ResponseWriter, r *http.Request) error
