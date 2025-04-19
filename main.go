@@ -19,8 +19,13 @@ func main() {
 		w.Write([]byte("pong!!!"))
 	})
 
-	user.SetupRoutes(r)
-	company.SetupRoutes(r)
+	userService := user.NewService(user.NewMemoryRepo())
+	userHandler := user.NewHandler(userService)
+	user.SetupRoutes(r, userHandler)
+
+	companyService := company.NewService(company.NewMemoryRepo())
+	companyHandler := company.NewHandler(companyService)
+	company.SetupRoutes(r, companyHandler)
 
 	fmt.Println("Starting server on :4545")
 	if err := http.ListenAndServe(":4545", r); err != nil {

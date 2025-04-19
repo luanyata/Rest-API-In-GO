@@ -1,4 +1,4 @@
-package user
+package company
 
 import (
 	"encoding/json"
@@ -18,22 +18,23 @@ func NewHandler(svc *Service) *Handler {
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) error {
-	var u User
-	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+	var c Company
+	if err := json.NewDecoder(r.Body).Decode(&c); err != nil {
 		return errs.BadRequestException("JSON inválido", "invalid_json")
 	}
-	user, err := h.svc.CreateUser(u)
+	c, err := h.svc.CreateCompany(c)
 	if err != nil {
 		return err
 	}
-	return json.NewEncoder(w).Encode(user)
+	return json.NewEncoder(w).Encode(c)
 }
+
 func (h *Handler) List(w http.ResponseWriter, r *http.Request) error {
-	users, err := h.svc.ListUsers()
+	companies, err := h.svc.ListCompanies()
 	if err != nil {
 		return err
 	}
-	return json.NewEncoder(w).Encode(users)
+	return json.NewEncoder(w).Encode(companies)
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) error {
@@ -42,11 +43,11 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return errs.BadRequestException("ID inválido", "invalid_id")
 	}
-	u, err := h.svc.GetUser(id)
+	c, err := h.svc.GetCompany(id)
 	if err != nil {
 		return err
 	}
-	return json.NewEncoder(w).Encode(u)
+	return json.NewEncoder(w).Encode(c)
 }
 
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) error {
@@ -55,16 +56,16 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return errs.BadRequestException("ID inválido", "invalid_id")
 	}
-	var u User
-	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+	var c Company
+	if err := json.NewDecoder(r.Body).Decode(&c); err != nil {
 		return errs.BadRequestException("JSON inválido", "invalid_json")
 	}
-	u.ID = id
-	user, err := h.svc.UpdateUser(u)
+	c.ID = id
+	c, err = h.svc.UpdateCompany(c)
 	if err != nil {
 		return err
 	}
-	return json.NewEncoder(w).Encode(user)
+	return json.NewEncoder(w).Encode(c)
 }
 
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) error {
@@ -73,7 +74,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return errs.BadRequestException("ID inválido", "invalid_id")
 	}
-	err = h.svc.DeleteUser(id)
+	err = h.svc.DeleteCompany(id)
 	if err != nil {
 		return err
 	}
