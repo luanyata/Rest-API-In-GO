@@ -32,6 +32,15 @@ func (m *memoryRepo) FindByID(id int) (User, error) {
 	return u, nil
 }
 
+func (m *memoryRepo) FindByEmail(email string) (User, error) {
+	for _, user := range m.data {
+		if user.Email == email {
+			return user, nil
+		}
+	}
+	return User{}, nil
+}
+
 func (m *memoryRepo) Update(user User) (User, error) {
 	m.data[user.ID] = user
 	return user, nil
