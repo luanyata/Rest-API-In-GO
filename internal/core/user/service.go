@@ -1,7 +1,6 @@
 package user
 
 import (
-	"net/http"
 	"rest-go/internal/infra/security"
 	"rest-go/internal/shared/errs"
 )
@@ -16,24 +15,29 @@ func NewService(r Repository) *Service {
 
 func (s *Service) CreateUser(u User) (User, error) {
 	if !u.IsValidEmail() {
-		return User{}, errs.BadRequestException("Email inválido", "invalid_email")
+		return User{}, errs.BadRequestException(
+			errs.UserError.EmailInvalid.Message,
+			errs.UserError.EmailInvalid.Type,
+		)
 	}
 
 	u.Normalize()
 
-	_, err := s.GetUserByEmail(u.Email)
+	_, found := s.repo.FindByEmail(u.Email)
 
-	if err == nil {
-		return User{}, errs.ConflictException("Email já cadastrado", "email_already_exists")
-	}
-
-	if httpErr, ok := err.(errs.HttpErrorInterface); !ok || httpErr.StatusCode() != http.StatusNotFound {
-		return User{}, err
+	if found {
+		return User{}, errs.ConflictException(
+			errs.UserError.EmailAlreadyExists.Message,
+			errs.UserError.EmailAlreadyExists.Type,
+		)
 	}
 
 	hashedPassword, err := security.HashPassword(u.Password)
 	if err != nil {
-		return User{}, errs.InternalServerException("Erro ao criar usuário", "hash_error")
+		return User{}, errs.InternalServerException(
+			errs.UserError.FailHashPassword.Message,
+			errs.UserError.FailHashPassword.Type,
+		)
 	}
 
 	u.Password = hashedPassword
@@ -42,16 +46,22 @@ func (s *Service) CreateUser(u User) (User, error) {
 }
 
 func (s *Service) GetUser(id int) (User, error) {
-	return s.repo.FindByID(id)
+
+	u, found := s.repo.FindByID(id)
+
+	if !found {
+		return User{}, errs.NotFoundException(
+			errs.UserError.NotFound.Message,
+			errs.UserError.NotFound.Type,
+		)
+	}
+	return u, nil
 }
 
-func (s *Service) GetUserByEmail(email string) (User, error) {
-	u, err := s.repo.FindByEmail(email)
-	if err != nil {
-		return User{}, err
-	}
+func (s *Service) GetUserByEmail(email string) (User, bool) {
+	u, found := s.repo.FindByEmail(email)
 
-	return u, nil
+	return u, found
 }
 
 func (s *Service) UpdateUser(u User) (User, error) {

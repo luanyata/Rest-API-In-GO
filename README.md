@@ -71,8 +71,22 @@ POST /users
 Content-Type: application/json
 
 {
-    "name": "John Doe",
-    "email": "john@example.com"
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john@example.com",
+    "password": "securepassword123"
+}
+```
+
+Response:
+```json
+{
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john@example.com",
+    "createdAt": "2023-10-15T14:30:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
 }
 ```
 
@@ -87,12 +101,23 @@ Content-Type: application/json
 }
 ```
 
+Response:
+```json
+{
+    "id": 1,
+    "name": "Acme Inc",
+    "cnpj": "12345678000199",
+    "createdAt": "2023-10-15T14:35:00Z",
+    "updatedAt": "2023-10-15T14:35:00Z"
+}
+```
+
 ### Error Response Format
 ```json
 {
-    "timestamp": "2024-03-21T10:00:00Z",
+    "timestamp": "2023-10-15T14:40:00Z",
     "message": "User not found",
-    "type": "user_not_found",
+    "type": "USER_NOT_FOUND",
     "statusCode": 404,
     "path": "/users/123"
 }
@@ -119,3 +144,7 @@ Content-Type: application/json
 ## Dependencies
 
 - [Chi Router](https://github.com/go-chi/chi) - Lightweight HTTP router
+- [Testify](https://github.com/stretchr/testify) - Testing toolkit
+- [Air](https://github.com/cosmtrek/air) - Live reload for Go applications
+- [Validator](https://github.com/go-playground/validator) - Request validation
+- [bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Password hashing

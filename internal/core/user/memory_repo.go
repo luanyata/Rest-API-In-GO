@@ -27,18 +27,23 @@ func (m *memoryRepo) Create(u User) (User, error) {
 	return u, nil
 }
 
-func (m *memoryRepo) FindByID(id int) (User, error) {
+func (m *memoryRepo) FindByID(id int) (User, bool) {
 	u := m.data[id]
-	return u, nil
+
+	if u.ID == 0 {
+		return User{}, false
+	}
+
+	return u, true
 }
 
-func (m *memoryRepo) FindByEmail(email string) (User, error) {
+func (m *memoryRepo) FindByEmail(email string) (User, bool) {
 	for _, user := range m.data {
 		if user.Email == email {
-			return user, nil
+			return user, true
 		}
 	}
-	return User{}, nil
+	return User{}, false
 }
 
 func (m *memoryRepo) Update(user User) (User, error) {
